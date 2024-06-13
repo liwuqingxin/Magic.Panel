@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nlnet.Avalonia.MagicPanel", "Nlnet.Avalonia.MagicPanel\Nlnet.Avalonia.MagicPanel.csproj", "{8C5CBC00-951B-40F3-B39B-0A6445EE5264}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{A57966CA-3571-4184-99DD-BF8500C3FA68}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nlnet.Avalonia.MagicPanel.App", "Nlnet.Avalonia.MagicPanel.App\Nlnet.Avalonia.MagicPanel.App.csproj", "{20FC3384-8B72-4676-BAEA-43AE9E88ED26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		LinuxDebug|Any CPU = LinuxDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.LinuxDebug|Any CPU.ActiveCfg = LinuxDebug|Any CPU
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.LinuxDebug|Any CPU.Build.0 = LinuxDebug|Any CPU
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5CBC00-951B-40F3-B39B-0A6445EE5264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.LinuxDebug|Any CPU.ActiveCfg = LinuxDebug|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.LinuxDebug|Any CPU.Build.0 = LinuxDebug|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FC3384-8B72-4676-BAEA-43AE9E88ED26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22E9792A-6791-48EE-88DC-9DDA7F282064}
+	EndGlobalSection
+EndGlobal

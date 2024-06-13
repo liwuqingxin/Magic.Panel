@@ -1,0 +1,1 @@
+This library provides a magic panel that provides kinds of layout. Some css layout and avalonia layout are supported. Just try it!

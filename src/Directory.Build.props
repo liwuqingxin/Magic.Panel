@@ -1,0 +1,18 @@
+<Project>
+	<PropertyGroup>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+		<AvaloniaVersion>11.0.0</AvaloniaVersion>
+		<FileVersion>$([System.DateTime]::Now.ToString("yyyy.MM.dd.HHmm"))</FileVersion>
+
+		<NugetVersion>1.0.0-beta.1</NugetVersion>
+		<Author>nlnet</Author>
+		<ProjectUrl>https://github.com/liwuqingxin/Avalonia.MagicPanel</ProjectUrl>
+		<Copyright>Copyright ©2024 L, Nlnet, All Rights Reserved.</Copyright>
+		<PackageIcon>acss.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/liwuqingxin/Avalonia.MagicPanel</RepositoryUrl>
+
+	</PropertyGroup>
+</Project>
