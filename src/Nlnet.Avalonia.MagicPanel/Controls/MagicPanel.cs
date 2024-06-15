@@ -170,6 +170,23 @@ namespace Nlnet.Avalonia.Controls
         #endregion
 
 
+
+        #region Other Properties
+
+        /// <summary>
+        /// Enable this only if you want to animate the width of the children. This is to fix a bug for arrangement. 
+        /// </summary>
+        public bool ShouldFixArrangementOfTextBlock
+        {
+            get => GetValue(ShouldFixArrangementOfTextBlockProperty);
+            set => SetValue(ShouldFixArrangementOfTextBlockProperty, value);
+        }
+        public static readonly StyledProperty<bool> ShouldFixArrangementOfTextBlockProperty = AvaloniaProperty
+            .Register<MagicPanel, bool>(nameof(ShouldFixArrangementOfTextBlock));
+
+        #endregion
+
+
         
         #region Layouts
 

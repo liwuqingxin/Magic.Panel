@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.VisualTree;
 using Nlnet.Avalonia.Controls;
 // ReSharper disable StringLiteralTypo
 // ReSharper disable CommentTypo
@@ -25,6 +28,13 @@ public abstract class MagicLayout : AvaloniaObject, IMagicLayout
             if (child.IsEffectivelyVisible == false)
             {
                 continue;
+            }
+            
+            // This is to fix the bug that TextBlock changes _constraint to finalSize if the width of finalSize is less
+            // than _constraint.Width.
+            if (panel.ShouldFixArrangementOfTextBlock)
+            {
+                FixConstraintSize(child.GetVisualDescendants().OfType<TextBlock>(), finalSize);
             }
             
             var location = child.GetTopLeft(finalSize);
@@ -128,5 +138,26 @@ public abstract class MagicLayout : AvaloniaObject, IMagicLayout
         }
     }
 
+    #endregion
+
+
+
+    #region Fix constraint size for TextBlock
+
+    private static readonly FieldInfo? ConstraintOfTextBlockFieldInfo = typeof(TextBlock).GetField("_constraint", BindingFlags.Instance | BindingFlags.NonPublic);
+
+    private static void FixConstraintSize(IEnumerable<TextBlock> textBlocks, Size finalSize)
+    {
+        if (ConstraintOfTextBlockFieldInfo == null)
+        {
+            return;
+        }
+        
+        foreach (var textBlock in textBlocks)
+        {
+            ConstraintOfTextBlockFieldInfo?.SetValue(textBlock, finalSize);   
+        }
+    }
+    
     #endregion
 }

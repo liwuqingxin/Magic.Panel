@@ -101,6 +101,13 @@
                         </Transitions>
                     </Setter>
                 </Style>
+                <Style Selector="nlnet|MagicPanel">
+                    <!-- NOTICE -->
+                    <!-- This is a dangerous operation as it will affect all descendant TextBlock's arrangement. -->
+                    <!-- If any problem occurs, just try turning it off. -->
+                    <!-- NOTICE -->
+                    <Setter Property="ShouldFixArrangementOfTextBlock" Value="True"/>
+                </Style>
                 <Style Selector="GridSplitter">
                     <Setter Property="Background" Value="Bisque" />
                 </Style>
@@ -194,7 +201,7 @@
                             <Border Width="100"
                                     Height="100"
                                     Background="Red">
-                                <Button Content="Size = (100,100)" CornerRadius="20"/>
+                                <Button Content="Size = (100,100)" CornerRadius="20" />
                             </Border>
                             <Border Background="Green">
                                 <Button Content="Size = (Auto,Auto)" CornerRadius="20" />
@@ -225,22 +232,22 @@
                                   VerticalAlignment="Bottom" />
                 </Grid>
             </TabItem>
-            
-             <!-- Measure Test -->
+
+            <!-- Measure Test -->
             <TabItem Header="Measure Test">
-                <Grid ColumnDefinitions="6*,*" RowDefinitions="6*,*">
+                <Grid ColumnDefinitions="6*,*" RowDefinitions="*,*">
                     <nlnet:MagicPanel Layout="{Binding #TbxLayout.Text}" LayoutStyle="{Binding #TbxLayoutStyle.Text}">
                         <Border Background="Green">
                             <Button CornerRadius="20">
-                                <TextBlock Text="Size = (Auto,Auto)" TextTrimming="{x:Static TextTrimming.CharacterEllipsis}"/>
+                                <TextBlock Text="Size = (Auto,Auto)" TextTrimming="{x:Static TextTrimming.CharacterEllipsis}" />
                             </Button>
                         </Border>
                     </nlnet:MagicPanel>
-                    
+
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <Border Background="Green">
                             <Button CornerRadius="20">
-                                <TextBlock Text="Size = (Auto,Auto)" TextTrimming="{x:Static TextTrimming.CharacterEllipsis}"/>
+                                <TextBlock Text="Size = (Auto,Auto)" TextTrimming="{x:Static TextTrimming.CharacterEllipsis}" />
                             </Button>
                         </Border>
                     </StackPanel>
@@ -311,7 +318,8 @@
                                 <TextBlock Text="{Binding $parent[Border].(nlnet:MagicPanel.Order), StringFormat=Order:{0}}" />
                             </StackPanel>
                         </Border>
-                        <Border Background="#791A09" nlnet:MagicPanel.FlexBasis="100"
+                        <Border nlnet:MagicPanel.FlexBasis="100"
+                                Background="#791A09"
                                 BorderBrush="White"
                                 BorderThickness="0">
                             <StackPanel>
