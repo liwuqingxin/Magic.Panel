@@ -2,11 +2,11 @@ using System.Text;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace Nlnet.Avalonia.MagicPanel.App.Views.Pages
+namespace Nlnet.Avalonia.MagicPanel.App.Views
 {
     public enum Orientations { H, V, Horizontal, Vertical, }
 
-    public enum Spacings { _5 = 5, _10 = 10, _20 = 20, _30 = 30, }
+    public enum Spacings { _0 = 0, _5 = 5, _10 = 10, _20 = 20, _30 = 30, }
     
     public enum Layouts { Stack, Wrap, Canvas, Flex, Grid }
     

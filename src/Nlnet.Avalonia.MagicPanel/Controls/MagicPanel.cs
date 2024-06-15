@@ -89,17 +89,17 @@ namespace Nlnet.Avalonia.Controls
         public static readonly AttachedProperty<bool> ReverseProperty = AvaloniaProperty
             .RegisterAttached<MagicPanel, MagicPanel, bool>("Reverse", false);
 
-        // FlexWrap
-        public static FlexWrap GetFlexWrap(MagicPanel host)
+        // Wrap
+        public static Wrap GetWrap(MagicPanel host)
         {
-            return host.GetValue(FlexWrapProperty);
+            return host.GetValue(WrapProperty);
         }
-        public static void SetFlexWrap(MagicPanel host, FlexWrap value)
+        public static void SetWrap(MagicPanel host, Wrap value)
         {
-            host.SetValue(FlexWrapProperty, value);
+            host.SetValue(WrapProperty, value);
         }
-        public static readonly AttachedProperty<FlexWrap> FlexWrapProperty = AvaloniaProperty
-            .RegisterAttached<MagicPanel, MagicPanel, FlexWrap>("FlexWrap", FlexWrap.NoWrap);
+        public static readonly AttachedProperty<Wrap> WrapProperty = AvaloniaProperty
+            .RegisterAttached<MagicPanel, MagicPanel, Wrap>("Wrap", Wrap.NoWrap);
 
         #endregion
 
@@ -228,7 +228,7 @@ namespace Nlnet.Avalonia.Controls
                 AlignContentProperty,
                 OrientationProperty,
                 ReverseProperty,
-                FlexWrapProperty);
+                WrapProperty);
             
             AffectsParentMeasure<MagicPanel>(
                 AlignSelfProperty,
@@ -319,148 +319,148 @@ namespace Nlnet.Avalonia.Controls
         
         #region Measure & Arrange
 
-        protected override Size MeasureCore(Size availableSize)
-        {
-            if (IsVisible)
-            {
-                var margin            = Margin;
-                var useLayoutRounding = UseLayoutRounding;
-                var scale             = 1.0;
-
-                if (useLayoutRounding)
-                {
-                    scale  = global::Avalonia.Layout.LayoutHelper.GetLayoutScale(this);
-                    margin = global::Avalonia.Layout.LayoutHelper.RoundLayoutThickness(margin, scale, scale);
-                }
-
-                ApplyStyling();
-                ApplyTemplate();
-
-                var constrained = global::Avalonia.Layout.LayoutHelper.ApplyLayoutConstraints(
-                    this,
-                    availableSize.Deflate(margin));
-                var measured = MeasureOverride(constrained);
-
-                var width  = measured.Width;
-                var height = measured.Height;
-
-                {
-                    var widthCache = Width;
-
-                    if (!double.IsNaN(widthCache))
-                    {
-                        width = widthCache;
-                    }
-                }
-
-                width = Math.Min(width, MaxWidth);
-                width = Math.Max(width, MinWidth);
-
-                {
-                    var heightCache = Height;
-
-                    if (!double.IsNaN(heightCache))
-                    {
-                        height = heightCache;
-                    }
-                }
-
-                height = Math.Min(height, MaxHeight);
-                height = Math.Max(height, MinHeight);
-
-                if (useLayoutRounding)
-                {
-                    (width, height) = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(new Size(width, height), scale, scale);
-                }
-
-                width  = Math.Min(width,  availableSize.Width);
-                height = Math.Min(height, availableSize.Height);
-
-                return NonNegative(new Size(width, height).Inflate(margin));
-            }
-            else
-            {
-                return new Size();
-            }
-        }
-
-        protected override void ArrangeCore(Rect finalRect)
-        {
-            if (IsVisible)
-            {
-                var useLayoutRounding = UseLayoutRounding;
-                var scale             = global::Avalonia.Layout.LayoutHelper.GetLayoutScale(this);
-
-                var margin  = Margin;
-                var originX = finalRect.X + margin.Left;
-                var originY = finalRect.Y + margin.Top;
-
-                // Margin has to be treated separately because the layout rounding function is not linear
-                // f(a + b) != f(a) + f(b)
-                // If the margin isn't pre-rounded some sizes will be offset by 1 pixel in certain scales.
-                if (useLayoutRounding)
-                {
-                    margin = global::Avalonia.Layout.LayoutHelper.RoundLayoutThickness(margin, scale, scale);
-                }
-
-                var availableSizeMinusMargins = new Size(
-                    Math.Max(0, finalRect.Width - margin.Left - margin.Right),
-                    Math.Max(0, finalRect.Height - margin.Top - margin.Bottom));
-                var horizontalAlignment = HorizontalAlignment;
-                var verticalAlignment   = VerticalAlignment;
-                var size                = availableSizeMinusMargins;
-
-                if (horizontalAlignment != HorizontalAlignment.Stretch)
-                {
-                    size = size.WithWidth(Math.Min(size.Width, DesiredSize.Width - margin.Left - margin.Right));
-                }
-
-                if (verticalAlignment != VerticalAlignment.Stretch)
-                {
-                    size = size.WithHeight(Math.Min(size.Height, DesiredSize.Height - margin.Top - margin.Bottom));
-                }
-
-                size = global::Avalonia.Layout.LayoutHelper.ApplyLayoutConstraints(this, size);
-
-                if (useLayoutRounding)
-                {
-                    size = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(size, scale, scale);
-                    availableSizeMinusMargins = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(availableSizeMinusMargins, scale, scale);
-                }
-
-                size = ArrangeOverride(size).Constrain(size);
-
-                switch (horizontalAlignment)
-                {
-                    case HorizontalAlignment.Center:
-                    case HorizontalAlignment.Stretch:
-                        originX += (availableSizeMinusMargins.Width - size.Width) / 2;
-                        break;
-                    case HorizontalAlignment.Right:
-                        originX += availableSizeMinusMargins.Width - size.Width;
-                        break;
-                }
-
-                switch (verticalAlignment)
-                {
-                    case VerticalAlignment.Center:
-                    case VerticalAlignment.Stretch:
-                        originY += (availableSizeMinusMargins.Height - size.Height) / 2;
-                        break;
-                    case VerticalAlignment.Bottom:
-                        originY += availableSizeMinusMargins.Height - size.Height;
-                        break;
-                }
-
-                if (useLayoutRounding)
-                {
-                    originX = global::Avalonia.Layout.LayoutHelper.RoundLayoutValue(originX, scale);
-                    originY = global::Avalonia.Layout.LayoutHelper.RoundLayoutValue(originY, scale);
-                }
-
-                Bounds = new Rect(originX, originY, size.Width, size.Height);
-            }
-        }
+        // protected override Size MeasureCore(Size availableSize)
+        // {
+        //     if (IsVisible)
+        //     {
+        //         var margin            = Margin;
+        //         var useLayoutRounding = UseLayoutRounding;
+        //         var scale             = 1.0;
+        //
+        //         if (useLayoutRounding)
+        //         {
+        //             scale  = global::Avalonia.Layout.LayoutHelper.GetLayoutScale(this);
+        //             margin = global::Avalonia.Layout.LayoutHelper.RoundLayoutThickness(margin, scale, scale);
+        //         }
+        //
+        //         ApplyStyling();
+        //         ApplyTemplate();
+        //
+        //         var constrained = global::Avalonia.Layout.LayoutHelper.ApplyLayoutConstraints(
+        //             this,
+        //             availableSize.Deflate(margin));
+        //         var measured = MeasureOverride(constrained);
+        //
+        //         var width  = measured.Width;
+        //         var height = measured.Height;
+        //
+        //         {
+        //             var widthCache = Width;
+        //
+        //             if (!double.IsNaN(widthCache))
+        //             {
+        //                 width = widthCache;
+        //             }
+        //         }
+        //
+        //         width = Math.Min(width, MaxWidth);
+        //         width = Math.Max(width, MinWidth);
+        //
+        //         {
+        //             var heightCache = Height;
+        //
+        //             if (!double.IsNaN(heightCache))
+        //             {
+        //                 height = heightCache;
+        //             }
+        //         }
+        //
+        //         height = Math.Min(height, MaxHeight);
+        //         height = Math.Max(height, MinHeight);
+        //
+        //         if (useLayoutRounding)
+        //         {
+        //             (width, height) = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(new Size(width, height), scale, scale);
+        //         }
+        //
+        //         width  = Math.Min(width,  availableSize.Width);
+        //         height = Math.Min(height, availableSize.Height);
+        //
+        //         return NonNegative(new Size(width, height).Inflate(margin));
+        //     }
+        //     else
+        //     {
+        //         return new Size();
+        //     }
+        // }
+        //
+        // protected override void ArrangeCore(Rect finalRect)
+        // {
+        //     if (IsVisible)
+        //     {
+        //         var useLayoutRounding = UseLayoutRounding;
+        //         var scale             = global::Avalonia.Layout.LayoutHelper.GetLayoutScale(this);
+        //
+        //         var margin  = Margin;
+        //         var originX = finalRect.X + margin.Left;
+        //         var originY = finalRect.Y + margin.Top;
+        //
+        //         // Margin has to be treated separately because the layout rounding function is not linear
+        //         // f(a + b) != f(a) + f(b)
+        //         // If the margin isn't pre-rounded some sizes will be offset by 1 pixel in certain scales.
+        //         if (useLayoutRounding)
+        //         {
+        //             margin = global::Avalonia.Layout.LayoutHelper.RoundLayoutThickness(margin, scale, scale);
+        //         }
+        //
+        //         var availableSizeMinusMargins = new Size(
+        //             Math.Max(0, finalRect.Width - margin.Left - margin.Right),
+        //             Math.Max(0, finalRect.Height - margin.Top - margin.Bottom));
+        //         var horizontalAlignment = HorizontalAlignment;
+        //         var verticalAlignment   = VerticalAlignment;
+        //         var size                = availableSizeMinusMargins;
+        //
+        //         if (horizontalAlignment != HorizontalAlignment.Stretch)
+        //         {
+        //             size = size.WithWidth(Math.Min(size.Width, DesiredSize.Width - margin.Left - margin.Right));
+        //         }
+        //
+        //         if (verticalAlignment != VerticalAlignment.Stretch)
+        //         {
+        //             size = size.WithHeight(Math.Min(size.Height, DesiredSize.Height - margin.Top - margin.Bottom));
+        //         }
+        //
+        //         size = global::Avalonia.Layout.LayoutHelper.ApplyLayoutConstraints(this, size);
+        //
+        //         if (useLayoutRounding)
+        //         {
+        //             size = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(size, scale, scale);
+        //             availableSizeMinusMargins = global::Avalonia.Layout.LayoutHelper.RoundLayoutSizeUp(availableSizeMinusMargins, scale, scale);
+        //         }
+        //
+        //         size = ArrangeOverride(size).Constrain(size);
+        //
+        //         switch (horizontalAlignment)
+        //         {
+        //             case HorizontalAlignment.Center:
+        //             case HorizontalAlignment.Stretch:
+        //                 originX += (availableSizeMinusMargins.Width - size.Width) / 2;
+        //                 break;
+        //             case HorizontalAlignment.Right:
+        //                 originX += availableSizeMinusMargins.Width - size.Width;
+        //                 break;
+        //         }
+        //
+        //         switch (verticalAlignment)
+        //         {
+        //             case VerticalAlignment.Center:
+        //             case VerticalAlignment.Stretch:
+        //                 originY += (availableSizeMinusMargins.Height - size.Height) / 2;
+        //                 break;
+        //             case VerticalAlignment.Bottom:
+        //                 originY += availableSizeMinusMargins.Height - size.Height;
+        //                 break;
+        //         }
+        //
+        //         if (useLayoutRounding)
+        //         {
+        //             originX = global::Avalonia.Layout.LayoutHelper.RoundLayoutValue(originX, scale);
+        //             originY = global::Avalonia.Layout.LayoutHelper.RoundLayoutValue(originY, scale);
+        //         }
+        //
+        //         Bounds = new Rect(originX, originY, size.Width, size.Height);
+        //     }
+        // }
 
         private static Size NonNegative(Size size)
         {

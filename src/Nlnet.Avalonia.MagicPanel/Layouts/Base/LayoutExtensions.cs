@@ -150,10 +150,10 @@ internal static class LayoutExtensions
         switch (value)
         {
             case "wrap-reverse":
-                panel.SetCurrentValue(MagicPanel.FlexWrapProperty, FlexWrap.WrapReverse);
+                panel.SetCurrentValue(MagicPanel.WrapProperty, Wrap.WrapReverse);
                 break;
             default:
-                panel.TryApply<FlexWrap>(MagicPanel.FlexWrapProperty, value);
+                panel.TryApply<Wrap>(MagicPanel.WrapProperty, value);
                 break;
         }
     }

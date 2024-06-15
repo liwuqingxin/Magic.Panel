@@ -1,4 +1,6 @@
+using System;
 using Avalonia;
+using Avalonia.Data;
 using Avalonia.Layout;
 
 namespace Nlnet.Avalonia;
@@ -15,7 +17,7 @@ public class LayoutEx : AvaloniaObject
         host.SetValue(ArrangedWidthProperty, value);
     }
     public static readonly AttachedProperty<double> ArrangedWidthProperty = AvaloniaProperty
-        .RegisterAttached<LayoutEx, Layoutable, double>("ArrangedWidth", 0);
+        .RegisterAttached<LayoutEx, Layoutable, double>("ArrangedWidth", 0, false, BindingMode.TwoWay, null, (o, d) => Math.Max(d, 0));
 
     // ArrangedHeight
     public static double GetArrangedHeight(Layoutable host)
@@ -27,7 +29,7 @@ public class LayoutEx : AvaloniaObject
         host.SetValue(ArrangedHeightProperty, value);
     }
     public static readonly AttachedProperty<double> ArrangedHeightProperty = AvaloniaProperty
-        .RegisterAttached<LayoutEx, Layoutable, double>("ArrangedHeight", 0);
+        .RegisterAttached<LayoutEx, Layoutable, double>("ArrangedHeight", 0, false, BindingMode.TwoWay, null, (o, d) => Math.Max(d, 0));
 
     // ArrangedLeft
     public static double GetArrangedLeft(Layoutable host)

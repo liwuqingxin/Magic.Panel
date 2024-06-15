@@ -37,12 +37,12 @@ public class FlexLayout : MagicLayout
         children.JustMeasure(availableSize);
         
         // Deal with wrapping.
-        var flexWrap = MagicPanel.GetFlexWrap(panel);
+        var flexWrap = MagicPanel.GetWrap(panel);
         return flexWrap switch
         {
-            FlexWrap.NoWrap      => MeasureLine(panel, children, availableSize, maca, 0),
-            FlexWrap.Wrap        => MeasureLines(panel, children, availableSize, maca, false),
-            FlexWrap.WrapReverse => MeasureLines(panel, children, availableSize, maca, true),
+            Wrap.NoWrap      => MeasureLine(panel, children, availableSize, maca, 0),
+            Wrap.Wrap        => MeasureLines(panel, children, availableSize, maca, false),
+            Wrap.WrapReverse => MeasureLines(panel, children, availableSize, maca, true),
             _                    => new Size()
         };
     }

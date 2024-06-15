@@ -23,7 +23,7 @@ public enum JustifyContent
     SpaceAround,
 }
 
-public enum FlexWrap
+public enum Wrap
 {
     NoWrap,
     Wrap,
